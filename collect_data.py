@@ -25,6 +25,8 @@ def collect_training_data(total_actions):
     
     df = pd.DataFrame(columns=['s1', 's2', 's3','s4','s5','action','collision'])
     index = 0
+    collision_count = 0
+    non_collision_count = 0
 
     for action_i in range(total_actions):
         for event in pygame.event.get():
@@ -79,12 +81,14 @@ def collect_training_data(total_actions):
         # print('row: ', row)
         row = pd.Series(row, index = df.columns)
         if(len(row)!=0):
-            if(index<(400000)):
+            if( non_collision_count < collision_count):
                 df = df.append(row,ignore_index=True)
                 index = index+1
+                non_collision_count = non_collision_count + 1
             elif(row['collision']==1):
                 df = df.append(row,ignore_index=True)
                 index = index+1
+                collision_count = collision_count + 1
         # if((len(df)%2000) == 0):
         #     df.to_csv('submission2.csv',header=False,mode='a',index=False,line_terminator='\n')
         #     lst = [df]
@@ -113,5 +117,5 @@ def collect_training_data(total_actions):
 
 
 if __name__ == '__main__':
-    total_actions = 8000000
+    total_actions = 8000000000
     collect_training_data(total_actions)
