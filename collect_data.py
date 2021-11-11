@@ -79,7 +79,7 @@ def collect_training_data(total_actions):
         # print('row: ', row)
         row = pd.Series(row, index = df.columns)
         if(len(row)!=0):
-            if(index<(40000)):
+            if(index<(400000)):
                 df = df.append(row,ignore_index=True)
                 index = index+1
             elif(row['collision']==1):
@@ -91,11 +91,11 @@ def collect_training_data(total_actions):
         #     del lst
         #     df = pd.DataFrame(columns=['s1', 's2', 's3','s4','s5','action','collision'])
         #     index = 0
-        if(index>80000):
-            break
+        # if(index>800000):
+        #     break
         
     #print(df.head(100))
-    df.to_csv('submission2.csv',header=False,mode='a',index=False,line_terminator='\n')
+    df.to_csv('submission5.csv',header=False,index=False,line_terminator='\n')
 
 
         #STUDENTS: Update network_params.
@@ -113,5 +113,5 @@ def collect_training_data(total_actions):
 
 
 if __name__ == '__main__':
-    total_actions = 80000
+    total_actions = 8000000
     collect_training_data(total_actions)
